@@ -1,0 +1,9 @@
+{
+  "name": "teddy-tester",
+  "version": "1.0.0",
+  "description": "Genera agenti tester per ogni strato dell'applicazione (database, backend, frontend, mobile...) e un fixer, poi esegue da 1 a 5 giri di test e correzione su un branch dedicato",
+  "author": {
+    "name": "Team QA"
+  },
+  "keywords": ["qa", "test", "agenti", "bug", "fix"]
+}
