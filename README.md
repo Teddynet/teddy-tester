@@ -1,4 +1,20 @@
-# teddy-tester – ciclo di test e correzione con agenti Claude Code
+# teddy-tester – ciclo di test e correzione con agenti
+
+Skill per cicli automatici di test e correzione con agenti, in cinque versioni ottimizzate per strumento:
+
+| Strumento | Cartella | Nome della skill | Comando | Agenti generati in |
+|---|---|---|---|---|
+| Claude Code | radice (plugin) | `TeddyUniversalTestingByAgent` | `/teddy-tester:TeddyUniversalTestingByAgent 3` | `.claude/agents/` |
+| ChatGPT Codex | [codex/](codex/README.md) | `teddy-universal-testing-by-agent` | `$teddy-universal-testing-by-agent 3` | `.codex/agents/` (TOML) |
+| Cursor | [cursor/](cursor/README.md) | `teddy-universal-testing-by-agent` | `/teddy-universal-testing-by-agent 3` | `.cursor/agents/` |
+| GitHub Copilot | [copilot/](copilot/README.md) | `teddy-universal-testing-by-agent` | `/teddy-universal-testing-by-agent 3` | `.github/agents/` |
+| OpenCode | [opencode/](opencode/README.md) | `teddy-universal-testing-by-agent` | `/teddy-tester 3` | `.opencode/agents/` |
+
+Cursor, Copilot e OpenCode accettano solo nomi di skill in minuscolo con trattini, per questo il nome cambia. Il comportamento è lo stesso ovunque; cambiano il formato degli agenti, il modo di avviarli in sequenza e la disponibilità di token e tempi nel report.
+
+**Manutenzione**: i file comuni (`references/strati.md`, `templates/catalogo.md`, `bugs.md`, `config.md`) e il testo degli agenti si modificano solo nella versione Claude Code; poi `bash scripts/sincronizza-comuni.sh` li copia nelle altre versioni. I modelli TOML di Codex e i file `SKILL.md` di ogni versione si aggiornano a mano.
+
+## Versione Claude Code
 
 Plugin per Claude Code con la skill `TeddyUniversalTestingByAgent`. In qualunque progetto, la skill:
 
@@ -9,7 +25,7 @@ Plugin per Claude Code con la skill `TeddyUniversalTestingByAgent`. In qualunque
 5. esegue da 1 a 5 giri test+fix (default 2) su un branch dedicato `qa/<data>`, con un commit per giro;
 6. chiude con un report in chat: bug, stato finale, file modificati, token e tempi per agente.
 
-## Installazione
+### Installazione
 
 Dal terminale (sostituisci il percorso con quello della cartella del plugin):
 
@@ -22,7 +38,7 @@ Oppure dentro Claude Code: `/plugin marketplace add C:\percorso\teddy-tester` e 
 
 Per provarlo senza installarlo: `claude --plugin-dir C:\percorso\teddy-tester\plugins\teddy-tester`
 
-## Uso
+### Uso
 
 Apri Claude Code nella cartella del progetto da testare, con l'albero git pulito:
 
@@ -41,7 +57,7 @@ Apri Claude Code nella cartella del progetto da testare, con l'albero git pulito
 
 Si può anche chiedere a parole: "fai 3 giri di test e correzione su questa app".
 
-## Cosa resta nel progetto
+### Cosa resta nel progetto
 
 | Percorso | Contenuto | In git |
 |---|---|---|
@@ -54,14 +70,14 @@ Si può anche chiedere a parole: "fai 3 giri di test e correzione su questa app"
 
 Rilanciando la skill nello stesso progetto, ti propone di riusare configurazione, catalogo e agenti.
 
-## Regole che la skill rispetta
+### Regole che la skill rispetta
 
 - Agenti sempre uno alla volta; mai più di 5 giri; stop appena non restano bug aperti o se la build fallisce due volte di seguito.
 - Solo ambienti locali e di prova: niente produzione, servizi remoti reali, invii reali.
 - I tester non toccano il codice; il fixer non avvia servizi e non tocca dati.
 - Nessun push, merge o rebase: decidi tu se e quando unire il branch `qa/<data>`.
 
-## Note
+### Note
 
 - Gli agenti generati durante una sessione si possono chiamare per nome solo dalla sessione successiva: nel frattempo la skill li fa eseguire a un agente generico con lo stesso modello, che legge il loro file.
 - La maggior parte dei token va ai tester (in un caso reale l'87%): per risparmiare conviene restringere gli strati o il catalogo, più che cambiare il modello del fixer.
