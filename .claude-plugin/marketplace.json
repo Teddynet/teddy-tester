@@ -3,14 +3,16 @@
   "name": "teddy-tester",
   "description": "Strumenti per cicli automatici di test e correzione con agenti Claude Code",
   "owner": {
-    "name": "Team QA"
+    "name": "Teddynet",
+    "url": "https://github.com/Teddynet"
   },
   "plugins": [
     {
       "name": "teddy-tester",
       "description": "Genera agenti tester per ogni strato dell'applicazione (database, backend, frontend, mobile...) e un fixer, poi esegue da 1 a 5 giri di test e correzione",
       "source": "./plugins/teddy-tester",
-      "category": "development"
+      "category": "development",
+      "homepage": "https://github.com/Teddynet/teddy-tester"
     }
   ]
 }
